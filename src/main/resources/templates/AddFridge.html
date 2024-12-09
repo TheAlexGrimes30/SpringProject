@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить новый холодильник</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        .back-link {
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        a {
+          color: #4CAF50;
+          text-decoration: none;
+          font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<a href="/home" class="back-link">Вернуться на главную</a>
+
+<<h1>Добавить новый холодильник</h1>
+<form th:action="@{/admin/addfridge}" th:object="${fridgeDto}" method="post">
+    <div>
+        <label for="brand">Бренд:</label>
+        <input type="text" id="brand" th:field="*{brand}" />
+        <p class="error" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
+    </div>
+
+    <div>
+        <label for="model">Модель:</label>
+        <input type="text" id="model" th:field="*{model}" />
+        <p class="error" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></p>
+    </div>
+
+    <div>
+        <label for="price">Цена:</label>
+        <input type="number" id="price" th:field="*{price}" step="0.01" />
+        <p class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+    </div>
+
+    <div>
+        <label for="description">Описание:</label>
+        <input type="text" id="description" th:field="*{description}" />
+        <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+    </div>
+
+    <div>
+        <label for="capacity">Емкость (л):</label>
+        <input type="number" id="capacity" th:field="*{capacity}" step="1" />
+        <p class="error" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></p>
+    </div>
+
+    <button type="submit">Создать холодильник</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Fridges</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f9;
+      color: #333;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+<p>
+  <a href="/home">Вернуться домой</a>
+</p>
+
+<form th:action="@{/all/pricefilter}" method="post">
+  <div>
+    <label for="min">Минимальная цена:</label>
+    <input type="number" id="min" name="min" step="1" required />
+    <p class="error" th:if="${minErrorMessage}" th:text="${minErrorMessage}"></p>
+  </div>
+
+  <div>
+    <label for="max">Максимальная цена:</label>
+    <input type="number" id="max" name="max" step="1" required />
+    <p class="error" th:if="${maxErrorMessage}" th:text="${maxErrorMessage}"></p>
+  </div>
+
+  <button type="submit">Отфильтровать</button>
+</form>
+
+<h1>Холодильники</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Бренд</th>
+    <th>Модель</th>
+    <th>Цена</th>
+    <th>Описание</th>
+    <th>Емкость</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="fridge : ${fridges}">
+    <td th:text="${fridge.id}">ID</td>
+    <td th:text="${fridge.brand}">Бренд</td>
+    <td th:text="${fridge.model}">Модель</td>
+    <td th:text="${fridge.price}">Цена</td>
+    <td th:text="${fridge.description}">Описание</td>
+    <td th:text="${fridge.capacity}">Емкость</td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

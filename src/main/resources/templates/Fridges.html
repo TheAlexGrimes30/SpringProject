@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список Холодильников</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        a {
+          color: #4CAF50;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+<p>
+    <a href="/home">Вернуться на главную</a>
+</p>
+
+<h1>Список Холодильников</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>Цена</th>
+        <th>Описание</th>
+        <th>Емкость</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="fridge : ${fridges}">
+        <td th:text="${fridge.id}">ID</td>
+        <td th:text="${fridge.brand}">Марка</td>
+        <td th:text="${fridge.model}">Модель</td>
+        <td th:text="${fridge.price}">Цена</td>
+        <td th:text="${fridge.description}">Описание</td>
+        <td th:text="${fridge.capacity}">Емкость</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Gopienko Alexander">
+    <meta name="description" content="Продажа холодильников — сайт для просмотра и управления холодильниками в базе данных">
+    <meta name="keywords" content="холодильники, продажа, база данных, редактировать, фильтрация">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продажа холодильников</title>
+
+    <style>
+        /* General page settings */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #32cd32, #00f2fe);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container with a modern card-style design */
+        .container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 600px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-top: 20px;
+            font-size: 36px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 10px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        h3:hover {
+            background-color: #ddd;
+            transform: translateY(-5px);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Admin section with a neat border */
+        .admin-section {
+            margin-top: 40px;
+            border-top: 2px solid #4CAF50;
+            padding-top: 20px;
+        }
+
+        .logout {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            h3 {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Холодильники</h1>
+    <h2>Добро пожаловать, <span th:text="${username}">Пользователь</span>!</h2>
+    <a th:href="@{/all/fridges}"><h3>Просмотр всех записей в БД</h3></a>
+    <a th:href="@{/all/pricefilter}"><h3>Фильтрация по цене</h3></a>
+    <a th:href="@{/all/capacityfilter}"><h3>Фильтрация по вместимости</h3></a>
+    <a th:href="@{/all/brandfilter}"><h3>Фильтрация по названию бренда</h3></a>
+
+    <!-- Admin Section -->
+    <div class="admin-section" th:if="${isAdmin}">
+        <a th:href="@{/admin/addfridge}"><h3>Добавить запись в БД</h3></a>
+        <a th:href="@{/admin/updatefridge}"><h3>Редактировать запись в БД</h3></a>
+        <a th:href="@{/admin/deletefridge}"><h3>Удалить запись из БД</h3></a>
+        <a th:href="@{/admin/users}"><h3>Просмотр записей пользователей</h3></a>
+    </div>
+
+    <!-- Logout Section -->
+    <div class="logout" th:if="${isUser or isAdmin}">
+        <a th:href="@{/logout}"><h3>Выйти из аккаунта</h3></a>
+    </div>
+</div>
+
+</body>
+</html>
