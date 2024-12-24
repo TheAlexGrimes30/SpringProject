@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dto.FridgeDto;
 import com.example.demo.entity.Fridge;
 import com.example.demo.services.FridgeService;
+import com.example.demo.services.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class updateFridgeController {
 
     private final FridgeService fridgeService;
+    private final NotificationService notificationService;
 
     /**
      * Конструктор с внедрением зависимости.
@@ -27,8 +29,9 @@ public class updateFridgeController {
      * @param fridgeService объект сервиса {@link FridgeService} для работы с холодильниками
      */
     @Autowired
-    public updateFridgeController(FridgeService fridgeService){
+    public updateFridgeController(FridgeService fridgeService, NotificationService notificationService){
         this.fridgeService = fridgeService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -72,6 +75,8 @@ public class updateFridgeController {
         Fridge fridge = new Fridge(fridgeDto.getBrand(), fridgeDto.getModel(), fridgeDto.getPrice(),
                 fridgeDto.getDescription(), fridgeDto.getCapacity());
         fridgeService.updateFridge(id, fridge);
+        String message = "Данные холодильника с ID: " + id + " были обновлены";
+        notificationService.sendNotification(message);
         return "redirect:/all/fridges";
     }
 

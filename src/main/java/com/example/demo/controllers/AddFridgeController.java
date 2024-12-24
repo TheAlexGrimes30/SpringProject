@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dto.FridgeDto;
 import com.example.demo.entity.Fridge;
 import com.example.demo.services.FridgeService;
+import com.example.demo.services.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AddFridgeController {
 
     private final FridgeService fridgeService;
+    private final NotificationService notificationService;
+
 
     /**
      * Конструктор для внедрения зависимости сервиса холодильников.
@@ -26,8 +29,9 @@ public class AddFridgeController {
      * @param fridgeService сервис для работы с холодильниками
      */
     @Autowired
-    public AddFridgeController(FridgeService fridgeService){
+    public AddFridgeController(FridgeService fridgeService, NotificationService notificationService){
         this.fridgeService = fridgeService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -63,6 +67,8 @@ public class AddFridgeController {
         Fridge fridge = new Fridge(fridgeDto.getBrand(), fridgeDto.getModel(), fridgeDto.getPrice(),
                 fridgeDto.getDescription(), fridgeDto.getCapacity());
         fridgeService.save(fridge);
+        String message = "Добавлен новый холодильник: " + fridgeDto.getBrand() + " - " + fridgeDto.getModel();
+        notificationService.sendNotification(message);
         return "redirect:/home";
     }
 }

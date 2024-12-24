@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.services.FridgeService;
+import com.example.demo.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DeleteFridgeController {
 
     private final FridgeService fridgeService;
+    private final NotificationService notificationService;
 
     /**
      * Конструктор с внедрением зависимости.
@@ -22,8 +24,9 @@ public class DeleteFridgeController {
      * @param fridgeService объект сервиса {@link FridgeService} для работы с холодильниками
      */
     @Autowired
-    public DeleteFridgeController(FridgeService fridgeService){
+    public DeleteFridgeController(FridgeService fridgeService, NotificationService notificationService){
         this.fridgeService = fridgeService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -53,6 +56,8 @@ public class DeleteFridgeController {
             return "redirect:/all/fridges";
         }catch(Exception e){
             model.addAttribute("errorMessage", "Ошибка" + e.getMessage());
+            String message = "Холодильник с ID: " + id + " был удалён";
+            notificationService.sendNotification(message);
             return "DeleteFridge";
         }
     }

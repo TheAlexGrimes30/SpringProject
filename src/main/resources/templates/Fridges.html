@@ -34,6 +34,18 @@
           font-weight: bold;
         }
 
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
     </style>
 </head>
 <body>
@@ -53,6 +65,7 @@
         <th>Цена</th>
         <th>Описание</th>
         <th>Емкость</th>
+        <th>Покупка</th>
     </tr>
     </thead>
     <tbody>
@@ -63,9 +76,18 @@
         <td th:text="${fridge.price}">Цена</td>
         <td th:text="${fridge.description}">Описание</td>
         <td th:text="${fridge.capacity}">Емкость</td>
+        <td>
+            <form th:action="@{/all/buy}" method="post">
+                <input type="hidden" name="id" th:value="${fridge.id}">
+                <button type="submit">Купить</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
+
+<p th:if="${successMessage}" th:text="${successMessage}" style="color:green;"></p>
+<p th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></p>
 
 </body>
 </html>

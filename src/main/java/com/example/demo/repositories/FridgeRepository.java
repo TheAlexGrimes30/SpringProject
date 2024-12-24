@@ -37,4 +37,5 @@ public interface FridgeRepository extends JpaRepository<Fridge, Long> {
      */
     List<Fridge> findByBrand(String brand);
 
+
 }

@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.UserDto;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +19,16 @@ import java.util.List;
 public class RegistrationController {
 
     private final UserService userService;
+    private final NotificationService notificationService;
 
     /**
      * Конструктор контроллера для регистрации.
      *
      * @param userService сервис для управления пользователями
      */
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, NotificationService notificationService) {
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -62,11 +65,20 @@ public class RegistrationController {
                     userDto.getRole()
             );
             model.addAttribute("successMessage", "User registered successfully");
+            String notificationMessage = String.format(
+                    "Новый пользователь зарегистрирован: %s (%s) с ролью %s",
+                    userDto.getUsername(),
+                    userDto.getEmail(),
+                    userDto.getRole()
+            );
+            notificationService.sendNotification(notificationMessage);
+
             return "redirect:/Login";
         } catch (Exception e) {
             System.out.println("Ошибка" + e.getMessage());
             model.addAttribute("errorMessage", "Ошибка регистрации: ");
             model.addAttribute("roles", List.of("USER", "ADMIN"));
+
             return "Register";
         }
     }
